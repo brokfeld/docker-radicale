@@ -1,0 +1,13 @@
+[web]
+type = radicale_infcloud
+
+[auth]
+type = htpasswd
+htpasswd_filename =  /app/data/users
+htpasswd_encryption = bcrypt
+
+[storage]
+filesystem_folder = /app/data/collections
+
+[server]
+hosts = 0.0.0.0:5232
