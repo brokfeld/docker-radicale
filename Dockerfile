@@ -21,16 +21,17 @@ RUN python3 -m pip install --upgrade radicale
 RUN python3 -m pip install --upgrade https://github.com/Unrud/RadicaleInfCloud/archive/master.tar.gz
 RUN python3 -m pip install --upgrade radicale[bcrypt]
 
-RUN adduser radicale --system
+RUN adduser radicale
+#RUN addgroup radicale
+#RUN addgroup radicale radicale
 
 HEALTHCHECK --interval=30s --retries=3 CMD curl --fail http://localhost:5232 || exit 1
 
 COPY docker-entrypoint.sh /app
 RUN chmod +x /app/docker-entrypoint.sh
-#ENTRYPOINT ["/app/docker-entrypoint.sh"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
 CMD ["radicale", "--debug" , "--config", "/app/config"]
 #CMD ["radicale", "--config", "/app/config"]
-#su - radicale -c "echo $user"
-# https://github.com/tomsquest/docker-radicale
+
 
