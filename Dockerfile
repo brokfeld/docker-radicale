@@ -34,6 +34,6 @@ ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
 ## 10 start radicale
 #CMD ["radicale", "--debug" , "--config", "/app/config"]
-htpasswd -B -c /app/data/users CMD ["radicale", "--config", "/app/config"]
+CMD ["radicale", "--config", "/app/config"]
 
 
