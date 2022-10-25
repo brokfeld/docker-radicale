@@ -9,7 +9,7 @@ WORKDIR /app
 RUN mkdir data/collections -p
 
 ## 03 copy configuration file
-COPY config /app/data
+COPY config /app
 
 ## 04 create empty users file
 RUN echo "" > /app/data/users
@@ -35,7 +35,7 @@ RUN chmod +x /app/docker-entrypoint.sh
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
 ## 10 start radicale
-CMD ["radicale", "--debug" , "--config", "/app/data/config"]
+CMD ["radicale", "--debug" , "--config", "/app/config"]
 #CMD ["radicale", "--config", "/app/config"]
 
 
