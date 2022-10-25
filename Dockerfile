@@ -9,7 +9,7 @@ WORKDIR /app
 RUN mkdir data/collections -p
 
 ## 03 copy configuration file
-COPY config /app
+COPY config /app/data
 
 ## 04 create empty users file
 RUN echo "" > /app/data/users
@@ -24,7 +24,7 @@ RUN python3 -m pip install --upgrade https://github.com/Kozea/Radicale/archive/r
 #https://github.com/Kozea/Radicale/archive/master.tar.gz
 
 ## 07 add user for execution
-RUN adduser radicale --system
+#RUN adduser radicale --system
 
 ## 08 healthcheck
 HEALTHCHECK --interval=30s --retries=3 CMD curl --fail http://localhost:5232 || exit 1
@@ -35,7 +35,7 @@ RUN chmod +x /app/docker-entrypoint.sh
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
 ## 10 start radicale
-CMD ["radicale", "--debug" , "--config", "/app/config"]
+CMD ["radicale", "--debug" , "--config", "/app/data/config"]
 #CMD ["radicale", "--config", "/app/config"]
 
 

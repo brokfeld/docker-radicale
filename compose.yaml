@@ -3,8 +3,10 @@ services:
     image: brokfeld/radicale:latest
     container_name: radicale
     restart: unless-stopped
+    environment:
+      - USER_UID=${UID}
+      - USER_GID=${GID}
     ports:
       - 5232:5232
     volumes:
       - ./data:/app/data:rw
-
