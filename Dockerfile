@@ -1,37 +1,39 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04
 
 EXPOSE 5232
 
+## 01 set work dir
 WORKDIR /app
 
-
+## 02 make dirs
 RUN mkdir data/collections -p
 
-# /app/config
+## 03 copy configuration file
 COPY config /app
 
-# /app/data/users
-COPY users /app/data
+## 04 create empty users file
+RUN echo "" > /app/data/users
 
+## 05 install dependencies
 RUN apt update && apt upgrade -f -y
+RUN apt install python3 python3-pip apache2-utils -f -y
 
-RUN apt install python3 python3-pip build-essential libffi-dev python3-dev apache2-utils -f -y
+## 06 install radicale
+RUN python3 -m pip install --upgrade radicale===3.1.8
 
-RUN python3 -m pip install --upgrade radicale
-RUN python3 -m pip install --upgrade https://github.com/Unrud/RadicaleInfCloud/archive/master.tar.gz
-RUN python3 -m pip install --upgrade radicale[bcrypt]
+## 07 add user for execution
+RUN adduser radicale --system
 
-RUN adduser radicale
-#RUN addgroup radicale
-#RUN addgroup radicale radicale
-
+## 08 healthcheck
 HEALTHCHECK --interval=30s --retries=3 CMD curl --fail http://localhost:5232 || exit 1
 
+## 09 entrypoint
 COPY docker-entrypoint.sh /app
 RUN chmod +x /app/docker-entrypoint.sh
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
-CMD ["radicale", "--debug" , "--config", "/app/config"]
-#CMD ["radicale", "--config", "/app/config"]
+## 10 start radicale
+#CMD ["radicale", "--debug" , "--config", "/app/config"]
+htpasswd -B -c /app/data/users CMD ["radicale", "--config", "/app/config"]
 
 
