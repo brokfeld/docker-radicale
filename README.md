@@ -1,9 +1,13 @@
 # docker-radicale
 
 ```bash
-# build and run
+## 01 build
 docker build . -t brokfeld/radicale:latest
+
+## 02 stop and remove a old container
 docker stop radicale && docker rm radicale
+
+## 03 start container
 docker run \
   -d \
   --name radicale \
@@ -14,8 +18,7 @@ docker run \
   --restart unless-stopped \
   brokfeld/radicale:latest
 
-
-# create user
+## create a user
 docker exec -it radicale /bin/bash
 htpasswd -B -c /app/data/users username1
 ```
@@ -23,12 +26,12 @@ htpasswd -B -c /app/data/users username1
 ## compose
 
 ```bash
-# create .env file
+## 01 create .env file
 echo "UID=$(id -u $USER)" > .env && echo "GID=$(id -g $USER)" >> .env
 ```
 
 ```yaml
-# compose.yaml
+## 02 create compose.yaml
 services:
   radicale:
     image: brokfeld/radicale:latest
@@ -44,6 +47,10 @@ services:
 ```
 
 ```bash
+## create a user
+docker exec -it radicale /bin/bash
+htpasswd -B -c /app/data/users username1
+
 # start
 docker compose up -d
 
