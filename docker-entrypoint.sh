@@ -6,7 +6,7 @@ addgroup radicale --system --gid $USER_GID
 
 # set permissions
 chown -R radicale:radicale /app/data
-chmod 700 -R radicale:radicale /app/data
+chmod 700 -R /app/data
 
 # exec all as radicale user
 runuser -u radicale -- "$@"

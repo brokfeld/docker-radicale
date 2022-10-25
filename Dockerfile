@@ -23,19 +23,16 @@ RUN apt install python3 python3-pip apache2-utils -f -y
 RUN python3 -m pip install --upgrade https://github.com/Kozea/Radicale/archive/refs/heads/master.zip 
 #https://github.com/Kozea/Radicale/archive/master.tar.gz
 
-## 07 add user for execution
-#RUN adduser radicale --system
-
-## 08 healthcheck
+## 07 healthcheck
 HEALTHCHECK --interval=30s --retries=3 CMD curl --fail http://localhost:5232 || exit 1
 
-## 09 entrypoint
+## 08 entrypoint
 COPY docker-entrypoint.sh /app
 RUN chmod +x /app/docker-entrypoint.sh
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
-## 10 start radicale
-CMD ["radicale", "--debug" , "--config", "/app/config"]
-#CMD ["radicale", "--config", "/app/config"]
+## 09 start radicale
+#CMD ["radicale", "--debug" , "--config", "/app/config"]
+CMD ["radicale", "--config", "/app/config"]
 
 
