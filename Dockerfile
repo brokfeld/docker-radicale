@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:latest
 
 EXPOSE 5232
 
@@ -9,7 +9,7 @@ WORKDIR /app
 RUN mkdir data/collections -p
 
 ## 03 copy configuration file
-COPY config /app
+COPY config /app/data
 
 ## 04 create empty users file
 RUN echo "" > /app/data/users
@@ -19,7 +19,9 @@ RUN apt update && apt upgrade -f -y
 RUN apt install python3 python3-pip apache2-utils -f -y
 
 ## 06 install radicale
-RUN python3 -m pip install --upgrade radicale===3.1.8
+#RUN python3 -m pip install --upgrade radicale
+RUN python3 -m pip install --upgrade https://github.com/Kozea/Radicale/archive/refs/heads/master.zip 
+#https://github.com/Kozea/Radicale/archive/master.tar.gz
 
 ## 07 add user for execution
 RUN adduser radicale --system
@@ -33,7 +35,7 @@ RUN chmod +x /app/docker-entrypoint.sh
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
 ## 10 start radicale
-#CMD ["radicale", "--debug" , "--config", "/app/config"]
-CMD ["radicale", "--config", "/app/config"]
+CMD ["radicale", "--debug" , "--config", "/app/data/config"]
+#CMD ["radicale", "--config", "/app/config"]
 
 

@@ -1,10 +1,12 @@
-name: Docker
+name: Build and push docker image
 
 on:
   push:
     branches:
       - 'main'
-
+  schedule:
+    - cron:  '0 21 15 * *'
+ 
 jobs:
   docker:
     runs-on: ubuntu-latest
