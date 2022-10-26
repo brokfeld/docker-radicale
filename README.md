@@ -1,13 +1,15 @@
 # docker-radicale
 
+This repository builds every month the latest version from master branch of
+[https://github.com/Kozea/Radicale](https://github.com/Kozea/Radicale) on
+[Docker Hub](https://hub.docker.com/repository/docker/brokfeld/radicale).
+
+## Getting started
+
+### docker
+
 ```bash
-## 01 build
-docker build . -t brokfeld/radicale:latest
-
-## 02 stop and remove a old container
-docker stop radicale && docker rm radicale
-
-## 03 start container
+# start container
 docker run \
   -d \
   --name radicale \
@@ -18,20 +20,26 @@ docker run \
   --restart unless-stopped \
   brokfeld/radicale:latest
 
-## create a user
+# create a user
 docker exec -it radicale /bin/bash
 htpasswd -B -c /app/data/users username1
+
+# stop container
+docker stop radicale 
+
+# remove container
+docker rm radicale
 ```
 
-## compose
+### compose
 
 ```bash
-## 01 create .env file
+# create .env file
 echo "UID=$(id -u $USER)" > .env && echo "GID=$(id -g $USER)" >> .env
 ```
 
 ```yaml
-## 02 create compose.yaml
+# create compose.yaml
 services:
   radicale:
     image: brokfeld/radicale:latest
@@ -47,10 +55,12 @@ services:
 ```
 
 ```bash
-## create a user
+# create a user
 docker exec -it radicale /bin/bash
 htpasswd -B -c /app/data/users username1
+```
 
+```bash
 # start
 docker compose up -d
 
@@ -63,3 +73,7 @@ docker compose logs
 # update image
 docker compose down && docker compose pull && docker compose up -d
 ```
+
+## License
+
+[GPL-3.0](LICENSE)
