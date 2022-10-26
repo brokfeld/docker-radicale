@@ -2,7 +2,7 @@
 
 This repository builds every month the latest version from master branch of
 [https://github.com/Kozea/Radicale](https://github.com/Kozea/Radicale) on
-[Docker Hub](https://hub.docker.com/repository/docker/brokfeld/radicale).
+[Docker Hub](https://hub.docker.com/repository/docker/brokfeld/radicale)
 
 ## Getting started
 
