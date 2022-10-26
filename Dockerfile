@@ -21,7 +21,6 @@ RUN apt install python3 python3-pip apache2-utils -f -y
 ## 06 install radicale
 #RUN python3 -m pip install --upgrade radicale
 RUN python3 -m pip install --upgrade https://github.com/Kozea/Radicale/archive/refs/heads/master.zip 
-#https://github.com/Kozea/Radicale/archive/master.tar.gz
 
 ## 07 healthcheck
 HEALTHCHECK --interval=30s --retries=3 CMD curl --fail http://localhost:5232 || exit 1
